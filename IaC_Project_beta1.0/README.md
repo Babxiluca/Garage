@@ -20,22 +20,48 @@ Google Cloud SDK
 ## Getting Started
 
 We are going to learn the basics of Terraform:
-- Creating main.tf
-- Add AWS Provider
-- Generate and configure AWS credentials
-- Configure an AWS Virtual Machine
-- Initialize terraform project
-- Terraform fmt
-- Terraform validate
-- Terraform plan
-- Terraform apply
-- Terraform apply (updateing)
-- Create Input Variables
-- Set Locals
-- Create Outputs
-- Use a Terraform Module
+
+
+| Name | Definition | Configuration Hints | Addicional |
+|------|------------|---------------------|:----------:|
+| [https://developer.hashicorp.com/terraform/tutorials/cli/init] | Creating main.tf |   | addicional |
+| [https://registry.terraform.io/browse/providers] | Add AWS Provider |  | na |
+| [https://registry.terraform.io/providers/hashicorp/aws/latest/docs] | Generate and configure AWS credentials |  |  |
+| [https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance] | Configure an AWS Virtual Machine | na  | na |
+| [https://developer.hashicorp.com/terraform/tutorials/cli/init] | Initialize terraform project | na| na |
+| [https://developer.hashicorp.com/terraform/cli/commands/fmt] | Terraform fmt | depends_on buckent ownerhsip creation | na |
+| [https://developer.hashicorp.com/terraform/cli/commands/validate] | Terraform validate | na | na |
+| [https://developer.hashicorp.com/terraform/tutorials/cli/plan] | Terraform plan | role for catalog | assume role policy requested by databricks 0365 team to get enable the role |
+| [https://developer.hashicorp.com/terraform/tutorials/cli/apply] | Terraform apply | policy from databricks external role | na|
+| [https://developer.hashicorp.com/terraform/tutorials/cli/apply]| Terraform apply (updateing) | na | na |
+| [https://developer.hashicorp.com/terraform/language/values/locals][] | Set Locals and interpolations | depends_on external role creation | na |
+
+### First Module ###
+- Creating main.tf - 2 min
+- Add AWS Provider - 5 min 
+- Generate and configure AWS credentials - 5 min 
+- Configure an AWS Virtual Machine - 5 min 
+- Initialize terraform project - 5 min
+- Terraform fmt - 3 min
+- Terraform validate - 3 min
+- Terraform plan - 3 min
+- Terraform apply - 5 min 
+- Terraform apply (updateing) - 5 min 
+- Create Input Variables - 5 min 
+- Set Locals and interpolations - 5 min 
+- Create Outputs - 5 min
+- Terraform refresh - 1 min
+- Terraform output - 1 min
+- Terraform destroy - 1 min
+
+### Second Module ###
 - Divide project into multiple files
-- Terraform destroy
+- Terraform Data
+- Use local- Exec
+- Remote - Exec
+- Null resource
+- Terraform Module
+
 - Create a Terraform Cloud workspace
 - Migrate local to remote workspace
 - Move AWS Credentials to Env Vars
