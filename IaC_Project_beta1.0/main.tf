@@ -11,3 +11,10 @@ provider "aws" {
   # Configuration options
   #KEY
 }
+
+resource "aws_s3_bucket" "example" {
+  tags = {
+    Name  = "Example Bucket"
+    Owner = "Name-tutorial"
+  }
+}
