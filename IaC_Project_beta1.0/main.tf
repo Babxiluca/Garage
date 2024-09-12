@@ -15,6 +15,6 @@ provider "aws" {
 resource "aws_s3_bucket" "example" {
   tags = {
     Name  = "Example Bucket"
-    Owner = "${var.project_name}-tutorial"
+    Owner = "Name-tutorial"
   }
 }
