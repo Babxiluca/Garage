@@ -19,8 +19,9 @@ Google Cloud SDK
 
 ## Getting Started
 
-We are going to learn the basics of Terraform:
+### First Module ###
 
+We are going to learn the basics of Terraform:
 
 | Name | Definition | Configuration Hints | Addicional |
 |------|------------|---------------------|:----------:|
@@ -31,15 +32,21 @@ We are going to learn the basics of Terraform:
 | [https://developer.hashicorp.com/terraform/tutorials/cli/init] | Initialize terraform project | na| na |
 | [https://developer.hashicorp.com/terraform/cli/commands/fmt] | Terraform fmt | depends_on buckent ownerhsip creation | na |
 | [https://developer.hashicorp.com/terraform/cli/commands/validate] | Terraform validate | na | na |
-| [https://developer.hashicorp.com/terraform/tutorials/cli/plan] | Terraform plan | role for catalog | assume role policy requested by databricks 0365 team to get enable the role |
-| [https://developer.hashicorp.com/terraform/tutorials/cli/apply] | Terraform apply | policy from databricks external role | na|
-| [https://developer.hashicorp.com/terraform/tutorials/cli/apply]| Terraform apply (updateing) | na | na |
-| [https://developer.hashicorp.com/terraform/language/values/locals][] | Set Locals and interpolations | depends_on external role creation | na |
+| [https://developer.hashicorp.com/terraform/tutorials/cli/plan] | Terraform plan | |  |
+| [https://developer.hashicorp.com/terraform/tutorials/cli/apply] | Terraform apply |  | na|
+| [https://developer.hashicorp.com/terraform/tutorials/cli/apply]| Terraform apply (updating) | na | na |
+| [https://developer.hashicorp.com/terraform/language/values/locals][] | Set Locals and interpolations |  | na |
+| [https://developer.hashicorp.com/terraform/language/values/outputs][] | Create Outputs |  | na |
+| [https://developer.hashicorp.com/terraform/cli/commands/refresh][] | Terraform refresh |  | na |
+| [https://developer.hashicorp.com/terraform/language/values/outputs][] | Terraform output |  | na |
+| [https://developer.hashicorp.com/terraform/cli/commands/destroy][] | Terraform destroy |  | na |
+
+
 
 ### First Module ###
 - Creating main.tf - 2 min
 - Add AWS Provider - 5 min 
-- Generate and configure AWS credentials - 5 min 
+- Generate and configure AWS credentials - 5 min    
 - Configure an AWS Virtual Machine - 5 min 
 - Initialize terraform project - 5 min
 - Terraform fmt - 3 min
