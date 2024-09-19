@@ -3,10 +3,7 @@
 ## Getting Started
 
 ### First Module ###
-- Creating main.tf - 2 min
-- Add AWS Provider - 5 min 
-- Generate and configure your Cloud provider credentials - 5 min    
-- Configure a Virtual Machine (choose your provider)- 5 min 
+
 - Initialize terraform project - 5 min
 - Terraform fmt - 3 min
 - Terraform validate - 3 min
@@ -22,7 +19,6 @@
 
 ### Second Module ###
 - Divide project into multiple files
-- Terraform tfvars
 - Terraform Data
 - Use local- Exec
 - Remote - Exec

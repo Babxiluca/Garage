@@ -1,5 +1,3 @@
-##Add provider ###
-
 terraform {
   required_providers {
     google = {
@@ -16,7 +14,6 @@ provider "google" {
 	zone = "us-central1-c"
 }
 
-##Create a compute engine###
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance"
   machine_type = "e2-micro"
