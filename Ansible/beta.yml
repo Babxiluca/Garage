@@ -1,0 +1,20 @@
+users:
+- alba
+- melisa
+- juan
+- cesar
+
+user:
+  name: alba
+  job: engineer
+  skill: shine
+
+include_newlines: |
+  type some text
+  even more test
+  the last of the text
+
+fold:newlines: >
+  type some text
+  more text
+  last of the text
