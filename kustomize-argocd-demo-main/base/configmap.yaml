@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  index.html: |
+    <html>
+      <body>
+        <h1>Hola desde Kustomize + ArgoCD</h1>
+      </body>
+    </html>
