@@ -23,5 +23,5 @@ spec:
     volumes:
     - name: nginx-index-file
       configMap:
-        name: configmap
+        name: nginx-config
      
