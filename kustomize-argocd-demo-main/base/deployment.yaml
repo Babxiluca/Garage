@@ -22,6 +22,6 @@ spec:
                  monthPath: /usr/share/nginx/html/
     volumes:
     - name: nginx-index-file
-      configmap:
+      configMap:
         name: configmap
      
