@@ -1,0 +1,13 @@
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+.terragrunt-cache
+
+# Local .terraform directories
+**/.terraform/*
+# TODO:figure out if we want to commit these. ignore for now
+.terraform.lock.hcl

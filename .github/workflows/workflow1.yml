@@ -1,0 +1,40 @@
+name: Delete Merged Feature Branches
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  delete-merged-feature-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necesario para obtener el historial completo
+
+      - name: Get merged feature branches
+        run: |
+          git fetch --prune
+          
+          # Expresión regular para filtrar ramas que sigan el patrón específico
+          PATTERN="^(feature-E-\d*-)stories.*"
+
+          # Obtener las ramas fusionadas en main
+          MERGED_BRANCHES=$(git branch -r --merged origin/main | grep "origin/" | grep -v "origin/main" | sed 's/origin\///')
+
+          # Filtrar solo las que cumplan con el patrón
+          FILTERED_BRANCHES=$(echo "$MERGED_BRANCHES" | grep -E "$PATTERN" || true)
+
+          if [[ -z "$FILTERED_BRANCHES" ]]; then
+            echo "No merged feature branches to delete."
+            exit 0
+          fi
+
+          echo "Deleting merged feature branches:"
+          echo "$FILTERED_BRANCHES"
+
+          for BRANCH in $FILTERED_BRANCHES; do
+            git push origin --delete $BRANCH
+          done
