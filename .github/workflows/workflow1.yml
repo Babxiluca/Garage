@@ -19,7 +19,9 @@ jobs:
           git fetch --prune
           
           # Expresión regular para filtrar ramas que sigan el patrón específico
-          PATTERN="(feature-E-[0-9]*-stories.*)"
+          PATTERN="^feature-E-[0-9]+-stories/B-[0-9]+-.+"
+
+          # amo a ver los resultados
           echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$PATTERN"
 
           # Obtener las ramas fusionadas en main
