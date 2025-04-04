@@ -20,7 +20,6 @@ jobs:
           
           # Expresión regular para filtrar ramas que sigan el patrón específico
           PATTERN="(feature-E-\d*-)stories.*"
-          echo $PATTERN
 
           # Obtener las ramas fusionadas en main
           MERGED_BRANCHES=$(git branch -r --merged origin/main | grep "origin/" | grep -v "origin/main" | sed 's/origin\///')
