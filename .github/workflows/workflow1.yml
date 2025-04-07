@@ -12,23 +12,23 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Necesario para obtener el historial completo
+          fetch-depth: 0  # Necesario para obtener el historial complete          
 
-      - name: Get merged feature branches
+      - name: Clean-up merged feature branches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git fetch --prune
           
           # Expresión regular para filtrar ramas que sigan el patrón específico
-          PATTERN="^feature-E-[0-9]+-stories/B-[0-9]+-.+"
-
-          # amo a ver los resultados
-          echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$PATTERN"
+          regexBranchPattern="feature-E-[0-9]+-.*"
+          echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$regexBranchPattern"
 
           # Obtener las ramas fusionadas en main
-          MERGED_BRANCHES=$(git branch -r --merged origin/main | grep "origin/" | grep -v "origin/main" | sed 's/origin\///')
+          MERGED_BRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" | awk '$2 !~/\/origin\// { print $1 }'")
 
           # Filtrar solo las que cumplan con el patrón
-          FILTERED_BRANCHES=$(echo "$MERGED_BRANCHES" | grep -E "$PATTERN" || true)
+          FILTERED_BRANCHES=$(echo "$MERGED_BRANCHES" | grep -E "$regexBranchPatter" || true)
 
           if [[ -z "$FILTERED_BRANCHES" ]]; then
             echo "No merged feature branches to delete."
