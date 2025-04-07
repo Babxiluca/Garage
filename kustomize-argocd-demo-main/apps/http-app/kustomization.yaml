@@ -1,0 +1,6 @@
+namespace: httpd-app
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
