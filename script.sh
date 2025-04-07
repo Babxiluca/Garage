@@ -1,24 +1,3 @@
-name: Delete Merged Feature Branches
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  delete-merged-feature-branches:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Necesario para obtener el historial complete          
-
-      - name: Clean-up merged feature branches
-        run: |
-          git fetch --prune
-          
-          # Expresión regular para filtrar ramas que sigan el patrón específico
           regexBranchPattern="git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'"
           echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$regexBranchPattern"
 
@@ -38,5 +17,6 @@ jobs:
           echo "$FILTERED_BRANCHES"
 
           for BRANCH in $FILTERED_BRANCHES; do
-            git push origin --delete $BRANCH
+            echo "$BRANCH"
+            #git push origin --delete $BRANCH
           done
