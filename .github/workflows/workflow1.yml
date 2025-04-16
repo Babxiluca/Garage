@@ -21,7 +21,7 @@ jobs:
           # Expresión regular para filtrar ramas que sigan el patrón específico
           #regexBranchPattern='feature-E-[0-9]+-.*'#
           regexBranchPattern=$("git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'")
-          echo "$RESULTADO_JSON"
+          echo "$regexBranchPattern"
 
 
           # Obtener las ramas fusionadas en main
