@@ -19,8 +19,9 @@ jobs:
           git fetch --prune
           
           # Expresión regular para filtrar ramas que sigan el patrón específico
-          regexBranchPattern="git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'"
-          echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$regexBranchPattern"
+          #regexBranchPattern='feature-E-[0-9]+-.*'#
+          regexBranchPattern=$("git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'")
+          echo "$RESULTADO_JSON"
 
 
           # Obtener las ramas fusionadas en main

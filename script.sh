@@ -1,10 +1,11 @@
-          regexBranchPattern="git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'"
-          echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$regexBranchPattern"
+          regexBranchPattern=$(git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||')
+          echo "$rexBranchPattern"
 
-
+          
           # Obtener las ramas fusionadas en main
           MERGED_BRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" | awk '$2 !~/\/origin\// { print $1 }')
-
+          
+          sleep 5
           # Filtrar solo las que cumplan con el patrón
           FILTERED_BRANCHES=$(echo "$MERGED_BRANCHES" | grep -E "$regexBranchPatter" || true)
 
