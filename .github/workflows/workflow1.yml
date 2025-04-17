@@ -22,6 +22,7 @@ jobs:
         id: getpr
         run: |
           echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number' || echo "")" >> $GITHUB_OUTPUT
+          echo "$pr-number-closed"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -33,7 +34,7 @@ jobs:
           
           # Expresión regular para filtrar ramas que sigan el patrón específico
           #regexBranchPattern='feature-E-[0-9]+-.*'#
-          regexBranchPattern=$("git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'")
+          regexBranchPattern=$(git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||')
           echo "$regexBranchPattern"
 
 
