@@ -1,32 +1,32 @@
-name: Commits Fetching
+# name: Commits Fetching
 
-on: 
- pull_request: 
-    branches:
-        - main
+# on: 
+#  pull_request: 
+#     branches:
+#         - main
     
-jobs:
-  delete-merged-feature-branches:
-    runs-on: ubuntu-latest
-    steps:
+# jobs:
+#   delete-merged-feature-branches:
+#     runs-on: ubuntu-latest
+#     steps:
     
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Checkout PR changes
-      run: |
-        # Un-shallow
-        git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-        # Deepen topic branch; checkout topic branch
-        git fetch origin ${{ github.event.pull_request.head.ref }} --depth=$(( ${{ github.event.pull_request.commits }} + 1 ))
-        git checkout ${{ github.event.pull_request.head.ref }}
-        # Fetch main for common origin
-        git fetch origin main:main --depth=50
-    - name: Get BRANCH_POINT
-      id: branch_point
-      run: |
-        # Find common ancestor between main and topic branch
-        BRANCH_POINT=$(git merge-base $(git rev-parse --abbrev-ref HEAD) main)
-        [[ -z BRANCH_POINT ]] && echo "No branch point" && exit 1
-        echo "::set-output name=REF::$BRANCH_POINT"
-    - name: List changed files
-      run: git diff --name-only ${{ steps.branch_point.outputs.REF }}
+#     - name: Checkout
+#       uses: actions/checkout@v4
+#     - name: Checkout PR changes
+#       run: |
+#         # Un-shallow
+#         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+#         # Deepen topic branch; checkout topic branch
+#         git fetch origin ${{ github.event.pull_request.head.ref }} --depth=$(( ${{ github.event.pull_request.commits }} + 1 ))
+#         git checkout ${{ github.event.pull_request.head.ref }}
+#         # Fetch main for common origin
+#         git fetch origin main:main --depth=50
+#     - name: Get BRANCH_POINT
+#       id: branch_point
+#       run: |
+#         # Find common ancestor between main and topic branch
+#         BRANCH_POINT=$(git merge-base $(git rev-parse --abbrev-ref HEAD) main)
+#         [[ -z BRANCH_POINT ]] && echo "No branch point" && exit 1
+#         echo "::set-output name=REF::$BRANCH_POINT"
+#     - name: List changed files
+#       run: git diff --name-only ${{ steps.branch_point.outputs.REF }}
