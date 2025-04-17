@@ -5,10 +5,10 @@
 
           
           # Obtener las ramas fusionadas en main
-          LISTEDALLBRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" | awk '$2 !~/\/origin\// { print $1 }')
+          MERGED_BRANCHES=$( git branch -a --format "%(refname:short) %(upstream)" --merged main | awk '$2 !~/\/origin\// { print $1 }')
           echo "-----------------------------------------------------------------------------------------------------------------"
 
-          MERGED_BRANCHES=$(git branch --merged)
+          #MERGED_BRANCHES=$(git branch --merged)
           echo "-----------------------------------------------------------------------------------------------------------------"
 
           
@@ -18,10 +18,14 @@
           
           sleep 5
           if [[ -z "$FILTERED_BRANCHES" ]]; then
-            echo "No merged feature branches to delete."
+            echo "b_stories_merged=true" >> $GITHUB_OUTPUT
+            echo "b_branch_name=$MERGED_BRANCHES" >> $GITHUB_OUTUPUT
+          else
+            echo "b_stories_merged=false" >> $GITHUB_OUPUT
             exit 0
           fi
           echo "-----------------------------------------------------------------------------------------------------------------"
+          echo "No stories merged"
 
           echo "Deleting merged feature branches:"
           echo "$FILTERED_BRANCHES"
