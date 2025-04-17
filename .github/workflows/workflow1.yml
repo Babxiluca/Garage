@@ -21,8 +21,9 @@ jobs:
       - name: get the last pr closed
         id: getpr
         run: |
-          echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number' || echo "")" >> $GITHUB_OUTPUT
+          echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number' || echo "")"
           echo "last merged pr_number: $pr-number-closed"
+          echo "pr_merged: $pr-number-closed"  >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
