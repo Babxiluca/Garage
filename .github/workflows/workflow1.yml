@@ -7,35 +7,59 @@ on:
 
 jobs:
   delete-merged-feature-branches:
+    if: github.ref == 'ref/main'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Necesario para obtener el historial complete          
+          fetch-depth: 0  # Necesario para obtener el historial complete
 
-      - name: Clean-up merged feature branches
+      - name: get the last pr closed
+        id: getpr
+        run: |
+          echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number' || echo "")" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+
+      - name: list the branches merged
+        id: getregex
         run: |
           git fetch --prune
           
           # Expresión regular para filtrar ramas que sigan el patrón específico
-          regexBranchPattern="feature-E-[0-9]+-.*"
-          echo "$RESULTADO_JSON" | jq -r '.items[].path' | grep -P "$regexBranchPattern"
+          #regexBranchPattern='feature-E-[0-9]+-.*'#
+          regexBranchPattern=$("git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||'")
+          echo "$regexBranchPattern"
+
 
           # Obtener las ramas fusionadas en main
-          MERGED_BRANCHES=$("git branch -a --format "%(refname:short) %(upstream)" | awk '$2 !~/\/origin\// { print $1 }'")
+          MERGED_BRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" --merged main | awk '$2 !~/\/origin\// { print $1 }')
 
           # Filtrar solo las que cumplan con el patrón
           FILTERED_BRANCHES=$(echo "$MERGED_BRANCHES" | grep -E "$regexBranchPatter" || true)
 
           if [[ -z "$FILTERED_BRANCHES" ]]; then
-            echo "No merged feature branches to delete."
+            echo "b_stories_merged=true" >> $GITHUB_OUTPUT
+            echo "b_branch_name=$MERGED_BRANCHES" >> $GITHUB_OUTUPUT
+          else
+            echo "b_stories_merged=false" >> $GITHUB_OUPUT
             exit 0
           fi
 
-          echo "Deleting merged feature branches:"
-          echo "$FILTERED_BRANCHES"
+      - name: compare pr merged with the branch to be deleted
+        if: steps.getpr.outputs.pr-number-closed == steps.getregex.outputs.b_branch_name
+        run: echo "last PR merged is equal to merged branch"
 
-          for BRANCH in $FILTERED_BRANCHES; do
-            git push origin --delete $BRANCH
-          done
+      
+        
+
+         
+
+          # echo "Deleting merged feature branches:"
+          # echo "$FILTERED_BRANCHES"
+
+          # for BRANCH in $FILTERED_BRANCHES; do
+          #   git push origin --delete $BRANCH
+          # done

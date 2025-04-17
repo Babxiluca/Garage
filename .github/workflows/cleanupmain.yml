@@ -1,0 +1,22 @@
+name: Clean-up main branch
+
+on:
+    workflow_call:
+        inputs:
+            product:
+                required: true
+                type: string
+
+jobs:
+    delete-merged-feature-branches:
+        runs-on: ubuntu-latest
+        steps:
+
+          - name: Check out the repository
+            uses: actions/checkout@v4
+            with:
+              fetch-depth: 0  # Necesario para obtener el historial complete
+          - name: check current branch exist in Main
+            uses: ./.github/workflows/workflows_terraform_plan.ynl
+             
+       
