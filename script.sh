@@ -1,4 +1,4 @@
-          regexBranchPattern=$(git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||')
+regexBranchPattern=$(git branch -r | grep -E 'origin/feature-E-[0-9]+-.*' | sed 's|origin/||')
           echo "$rexBranchPattern"
 
           echo "-----------------------------------------------------------------------------------------------------------------"
