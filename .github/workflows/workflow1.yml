@@ -21,10 +21,12 @@ jobs:
       - name: get the last pr closed
         id: getpr
         run: |
-          echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number' || echo "")" >> $GITHUB_OUTPUT
-          echo "$pr-number-closed"
+          echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number' || echo "")"
+          echo "last merged pr_number: $pr-number-closed"
+          echo "pr_merged: $pr-number-closed"  >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
 
 
       - name: list the branches merged
@@ -46,9 +48,6 @@ jobs:
 
           if [[ -z "$FILTERED_BRANCHES" ]]; then
             echo "b_stories_merged=true" >> $GITHUB_OUTPUT
-            echo "b_branch_name=$MERGED_BRANCHES" >> $GITHUB_OUTUPUT
-          else
-            echo "b_stories_merged=false" >> $GITHUB_OUPUT
             exit 0
           fi
 
