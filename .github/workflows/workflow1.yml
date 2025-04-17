@@ -7,7 +7,6 @@ on:
 
 jobs:
   delete-merged-feature-branches:
-    if: github.ref == 'ref/main'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
