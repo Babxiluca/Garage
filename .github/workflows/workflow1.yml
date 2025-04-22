@@ -43,7 +43,7 @@ jobs:
 
           # Obtener las ramas fusionadas en main
           # MERGED_BRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" --merged main | awk '$2 !~/\/origin\// { print $1 }')
-            MERGED_BRANCHES=$(gh pr list --state merged --base main -- limit 1 --sort updated --json headRefName,author -q '.[].headRefName')
+            MERGED_BRANCHES=$(gh pr list --state merged --base main --limit 1 --sort updated --json headRefName,author -q '.[].headRefName')
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
