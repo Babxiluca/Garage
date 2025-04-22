@@ -22,11 +22,14 @@ jobs:
       - name: get the last pr closed
         id: getpr
         run: |
-          echo "pr_num=$(gh pr list --search ${{ github.sha }} --state merged --base main --json number -q '.[] | .number')"
+          echo "pr_num=$(gh pr list --base main --state merged --limit 1 --json number -q 'sort_by(.updatedAt) | reverse | .[0]')"
           echo "pr_num=$pr_num"
           echo "pr_num=$pr_num" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: validar pr
+        run: "echo PR ahora si fetched: ${{ steps.getpr.outputs.pr_num }}"
           
 
 
