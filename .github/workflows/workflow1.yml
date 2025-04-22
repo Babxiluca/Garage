@@ -22,8 +22,9 @@ jobs:
       - name: get the last pr closed
         id: getpr
         run: |
-          echo "pr_number_closed=$(gh pr list --search ${{ github.sha }} --state merged --base main --json number -q '.[] | .number')"
-          echo "pr_number_closed=$pr_number_closed" >> $GITHUB_OUTPUT
+          echo "pr_num=$(gh pr list --search ${{ github.sha }} --state merged --base main --json number -q '.[] | .number')"
+          echo "pr_num=$pr_num"
+          echo "pr_num=$pr_num" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
@@ -47,10 +48,11 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: compare pr merged with the branch to be deleted
+        if: steps.getpr.outputs.pr_num != ''
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ steps.getpr.outputs.pr_number_closed }}
-          ##comment-author: 'github-actions[bot]'
+          issue-number: ${{ steps.getpr.outputs.pr_num }}
+          #comment-author: 'github-actions[bot]'
           body: Please review el PR de la branch merged
             #  | author | PR number  | Branch Name merged |
             #  | -- | ---- | -------- |
