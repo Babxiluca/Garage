@@ -90,6 +90,47 @@ jobs:
              git push origin --delete $BRAN
            done
             
+        uses: peter-evans/create-or-update-comment@v3.0.1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+             ### ${{ inputs.comment-headRefName }}
+             | author | PR number  | Branch Name merged |
+             | -- | ---- | -------- |
+             | @${{ github.actor }} | `${{ steps.getpr.outcome }}` | `${{ steps.getregex.outcome }}` |
+
+             Once approval is giving, this branch will be deleted: please type delete
+
+
+
+             ```
+             ${{ inputs.apply-comment }}
+             ```
+
+             <details><summary>terraform init</summary>
+
+             ```diff
+      - name: delete branch
+        if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/delete')
+        run: |
+
+          # Filtrar solo las que cumplan con el patrón
+
+           git fetch --prune
+
+           FILTERED_BRANCHES=$(echo "$MERGED_BRANCHES" | grep -E "$regexBranchPatter" || true)
+           if [[ -z "$FILTERED_BRANCHES" ]]; the
+           echo "No stories to be merged" >> $GITHUB_OUTPUT
+           exit 0
+           fi
+           
+           echo "Deleting merged feature br
+           echo "$FILTERED_BRANCHES"
+           for BRANCH in $FILTERED_BRANCHES
+           echo "$BRANCH"
+             git push origin --delete $BRAN
+           done
+            
 
 
       
