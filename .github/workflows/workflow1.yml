@@ -26,7 +26,7 @@ jobs:
           echo "pr_num=$pr_num"
           echo "pr_num=$pr_num" >> $GITHUB_OUTPUT
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: validar pr
         run: "echo PR ahora si fetched: ${{ steps.getpr.outputs.pr_num }}"
@@ -48,7 +48,7 @@ jobs:
           # MERGED_BRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" --merged main | awk '$2 !~/\/origin\// { print $1 }')
             MERGED_BRANCHES=$(gh pr list --state merged --base main --limit 20 --json title,headRefName,number,updatedAt,author,comments -q 'sort_by(.updatedAt) | reverse | .[0]')
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: compare pr merged with the branch to be deleted
         if: steps.getpr.outputs.pr_num != ''
