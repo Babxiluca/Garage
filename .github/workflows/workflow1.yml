@@ -51,7 +51,6 @@ jobs:
         if: steps.getpr.outputs.pr-number-closed == steps.getregex.outputs.b_branch_name
         uses: peter-evans/create-or-update-comment@v4
         with:
-          #token: ${{secrets.GITHUB_TOKEN}}
           issue-number: ${{ secrets.GITHUB_TOKEN }}
           body: |
              Please review el PR de la branch merged
