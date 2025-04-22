@@ -90,6 +90,8 @@ jobs:
              git push origin --delete $BRAN
            done
             
+        
+      - name: udpate the pull request
         uses: peter-evans/create-or-update-comment@v3.0.1
         with:
           issue-number: ${{ github.event.pull_request.number }}
