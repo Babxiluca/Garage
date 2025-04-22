@@ -22,7 +22,7 @@ jobs:
       - name: get the last pr closed
         id: getpr
         run: |
-          echo "pr_num=$(gh pr list --base main --state merged --limit 1 --json number -q 'sort_by(.updatedAt) | reverse | .[0]')"
+          echo "pr_num=$(gh pr list --base main --state merged --limit 1 --json number -q 'sort_by(.updatedAt) | reverse | .[0].number')"
           echo "Las PR is $pr_num"
           echo "pr_num=$pr_num" >> $GITHUB_OUTPUT
         env:
