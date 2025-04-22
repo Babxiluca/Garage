@@ -44,6 +44,8 @@ jobs:
           # Obtener las ramas fusionadas en main
           # MERGED_BRANCHES=$(git branch -a --format "%(refname:short) %(upstream)" --merged main | awk '$2 !~/\/origin\// { print $1 }')
             MERGED_BRANCHES=$(gh pr list --state merged --base main --json headRefName -q '.[].headRefName')
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: compare pr merged with the branch to be deleted
         if: steps.getpr.outputs.pr-number-closed == steps.getregex.outputs.b_branch_name
