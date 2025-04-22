@@ -76,5 +76,3 @@ jobs:
            echo "$BRANCH"
              git push origin --delete $BRAN
            done
-          
-          # Filtrar solo las que cumplan con el patrón
