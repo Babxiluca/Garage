@@ -52,7 +52,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          issue-number: ${{ env.pr-number-closed }}
+          issue-number: ${{steps.getpr.outputs.number }}
           body: |
              Please review el PR de la branch merged
              | author | PR number  | Branch Name merged |
@@ -61,7 +61,6 @@ jobs:
 
        
       - name: delete branch
-        if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/delete')
         run: |
 
           # Filtrar solo las que cumplan con el patrón
@@ -80,33 +79,7 @@ jobs:
            echo "$BRANCH"
              git push origin --delete $BRAN
            done
-            
-        
-      - name: udpate the pull request
-        uses: peter-evans/create-or-update-comment@v3.0.1
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-             ### ${{ inputs.comment-headRefName }}
-             | author | PR number  | Branch Name merged |
-             | -- | ---- | -------- |
-             | @${{ github.actor }} | `${{ steps.getpr.outcome }}` | `${{ steps.getregex.outcome }}` |
-
-             Once approval is giving, this branch will be deleted: please type delete
-
-
-
-             ```
-             ${{ inputs.apply-comment }}
-             ```
-
-             <details><summary>terraform init</summary>
-
-             ```diff
-      - name: delete branch
-        if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/delete')
-        run: |
-
+          
           # Filtrar solo las que cumplan con el patrón
 
            git fetch --prune
