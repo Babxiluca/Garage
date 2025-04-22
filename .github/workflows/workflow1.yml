@@ -48,10 +48,9 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: compare pr merged with the branch to be deleted
-        if: steps.getpr.outputs.pr-number-closed == steps.getregex.outputs.b_branch_name
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ steps.getpr.outputs.pr_number_closed }}
+          issue-number: ${{ steps.getpr.outputs.pr_merged }}
           body: |
              Please review el PR de la branch merged
              | author | PR number  | Branch Name merged |
