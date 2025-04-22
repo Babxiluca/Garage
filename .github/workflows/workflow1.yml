@@ -51,24 +51,15 @@ jobs:
         if: steps.getpr.outputs.pr-number-closed == steps.getregex.outputs.b_branch_name
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{secrets.GITHUB_TOKEN}}
+          issue-number: ${{ env.getpr }}
           body: |
              Please review el PR de la branch merged
              | author | PR number  | Branch Name merged |
              | -- | ---- | -------- |
-             | @${{ github.actor }} | `${{ steps.getpr.outcome }}` | `${{ steps.getregex.outcome }}` |
+             | @${{ github.actor }} | `${{ steps.getpr.outcome.pr_number }}` | `${{ steps.getregex.outcome.MERGED_BRANCHES }}` |
 
-             Once approval is giving, this branch will be deleted: please type delete
-
-
-
-             ```
-             ${{ inputs.apply-comment }}
-             ```
-
-             <details><summary>terraform init</summary>
-
-             ```diff
+       
       - name: delete branch
         if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/delete')
         run: |
