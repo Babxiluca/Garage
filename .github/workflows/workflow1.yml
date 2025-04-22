@@ -22,9 +22,9 @@ jobs:
       - name: get the last pr closed
         id: getpr
         run: |
-          echo "pr-number-closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number')" >> $GITHUB_ENV
-          echo "last merged pr_number: $pr-number-closed"
-          echo "pr merged=$pr-number-closed" >> $GITHUB_OUTPUT
+          echo "pr_number_closed=$(gh pr list --search ${{ github.sha }} --state merged --json number -q '.[] | .number')" >> $GITHUB_ENV
+          echo "last merged pr_number: $pr_number_closed"
+          echo "pr_merged=$pr_number_closed" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
@@ -51,7 +51,7 @@ jobs:
         if: steps.getpr.outputs.pr-number-closed == steps.getregex.outputs.b_branch_name
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ github.event.pull_request.number }}
+          issue-number: ${{ steps.getpr.outputs.pr_number_closed }}
           body: |
              Please review el PR de la branch merged
              | author | PR number  | Branch Name merged |
