@@ -52,7 +52,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v4
         with:
           #token: ${{secrets.GITHUB_TOKEN}}
-          issue-number: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${ {secrets.GITHUB_TOKEN }}
           body: |
              Please review el PR de la branch merged
              | author | PR number  | Branch Name merged |
