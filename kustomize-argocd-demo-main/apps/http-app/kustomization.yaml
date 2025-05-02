@@ -1,4 +1,4 @@
-namespace: httpd-app
+namespace: http-app
 
 resources:
   - deployment.yaml
