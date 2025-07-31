@@ -1,9 +1,16 @@
 terraform {
+  
   backend "azurerm" {
     resource_group_name   = "test"
     storage_account_name  = "testdevaccount"        # Cambia por tu nombre real
     container_name        = "tfstate"
     key                   = "terraform.tfstate"
+  }
+  required_providers {
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.10"
+    }
   }
 }
 
@@ -47,6 +54,7 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
+  depends_on = [time_sleep.wait]
   name                = "vm-demo"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -66,5 +74,49 @@ resource "azurerm_linux_virtual_machine" "vm" {
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
     version   = "latest"
+  }
+}
+
+
+resource "azurerm_managed_disk" "extra" {
+  name                 = "extradisk"
+  location             = azurerm_resource_group.rg.location
+  resource_group_name  = azurerm_resource_group.rg.name
+  storage_account_type = "Standard_LRS"
+  disk_size_gb         = 1
+  create_option        = "Empty"
+}
+
+resource "time_sleep" "wait" {
+  create_duration = "60s"
+}
+resource "azurerm_virtual_machine_data_disk_attachment" "attach" {
+   managed_disk_id    = azurerm_managed_disk.extra.id
+   virtual_machine_id = azurerm_linux_virtual_machine.vm.id
+   lun                = 1
+   caching            = "ReadWrite"
+ }
+
+
+
+resource "azurerm_network_security_group" "nsg" {
+  name                = "demo-nsg"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  dynamic "security_rule" {
+    for_each = var.nsg_rules
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+      description                = security_rule.value.description
+    }
   }
 }
