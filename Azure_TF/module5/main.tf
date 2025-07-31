@@ -1,6 +1,14 @@
+terraform {
+  backend "azurerm" {
+    resource_group_name   = "terraform-state-rg"
+    storage_account_name  = "testdevaccount"        # Cambia por tu nombre real
+    container_name        = "tfstate"
+    key                   = "terraform.tfstate"
+  }
+}
+
 provider "azurerm" {
     features {}
-
   subscription_id = var.subscription_id
   client_id       = var.client_id
   client_secret   = var.client_secret
