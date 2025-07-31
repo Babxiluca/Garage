@@ -1,6 +1,6 @@
 terraform {
   backend "azurerm" {
-    resource_group_name   = "terraform-state-rg"
+    resource_group_name   = "test"
     storage_account_name  = "testdevaccount"        # Cambia por tu nombre real
     container_name        = "tfstate"
     key                   = "terraform.tfstate"
